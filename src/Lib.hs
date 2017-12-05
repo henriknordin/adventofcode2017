@@ -4,9 +4,13 @@ module Lib
     , input
     , checksum
     , checksum2
+    , naturals
+    , valid
+    , valid2
     ) where
 
 import Data.Char (digitToInt)
+import Data.List (sort, group)
 
 captcha :: String -> Int
 captcha xs = calculate (digitToInt $ head xs) (map digitToInt xs)
@@ -62,3 +66,26 @@ checksum2 xs = sum $ map evenDivisable $ parse xs
 parse :: [String] -> [[Int]]
 parse xs = map (map (\x -> read x :: Int)) $ map words xs
 
+data Spiral a = Start a
+              | RightNode a  
+              | UpNode a 
+              | LeftNode a
+              | DownNode a 
+              deriving (Show)
+
+naturals :: [Int]
+naturals = iterate (+1) 1
+
+-- concatMap (replicate 2) [1, 2..]
+-- List should be built as 1, 1, 2, 2, 3, 3, 4, 4, 5, 5
+--create :: [Spiral Int] -> [Spiral Int]
+--create [] = [Start 1]
+-- create x:xs  = create'
+--  where create'
+ 
+
+valid :: String -> Bool
+valid xs = all (\x -> length x == 1) $ group $ sort $ words xs
+
+valid2 :: String -> Bool
+valid2 xs = all (\x -> length x == 1) $ group $ sort $ map sort $ words xs
