@@ -5,12 +5,24 @@ module Lib
     , checksum
     , checksum2
     , naturals
+    , edges
+    , graph
     , valid
     , valid2
+    , input5
+    , parse
+    , solve
+    , solve'
+    , solve2'
+    , solve''
+    , solve2''
     ) where
 
 import Data.Char (digitToInt)
-import Data.List (sort, group)
+import Data.List (sort, group, unfoldr)
+import qualified Data.Sequence as S (Seq, index, length, update)
+
+import Debug.Trace (trace)
 
 captcha :: String -> Int
 captcha xs = calculate (digitToInt $ head xs) (map digitToInt xs)
@@ -66,11 +78,11 @@ checksum2 xs = sum $ map evenDivisable $ parse xs
 parse :: [String] -> [[Int]]
 parse xs = map (map (\x -> read x :: Int)) $ map words xs
 
-data Spiral a = Start a
-              | RightNode a  
-              | UpNode a 
-              | LeftNode a
-              | DownNode a 
+data Spiral = Start
+              | R   
+              | U  
+              | L 
+              | D 
               deriving (Show)
 
 naturals :: [Int]
@@ -82,10 +94,48 @@ naturals = iterate (+1) 1
 --create [] = [Start 1]
 -- create x:xs  = create'
 --  where create'
- 
+
+edges :: [Int]
+edges = concatMap (replicate 2) [1, 2..]
+
+--graph :: [Spiral]
+graph = unfoldr (\b -> Just (create b, b + 1)) 1 
+--foldr (\n acc -> acc ++ create n) [] [1, 2..]
+  where 
+    create :: Int -> [Spiral]
+    create n 
+      | n `mod` 2 == 1 = replicate n R ++ replicate n U
+      | n `mod` 2 == 0 = replicate n L ++ replicate n D
 
 valid :: String -> Bool
 valid xs = all (\x -> length x == 1) $ group $ sort $ words xs
 
 valid2 :: String -> Bool
 valid2 xs = all (\x -> length x == 1) $ group $ sort $ map sort $ words xs
+
+
+-- parse xs = map (map (\x -> read x :: Int)) $ map words xs
+--input5 :: String
+input5 = map (\x -> read x :: Int) $ words "0 3 0 1 -3"
+
+--solve :: [int] -> int
+solve xs = solve' 0 xs
+  where
+    solve' index xs' = let (beg, end) = splitAt index xs'
+                       in solve' (head end) (beg ++ (head end + 1) : drop 1 end)
+
+--solve' index xs' | trace ("solve " ++ show index ++ " " ++ show xs') 
+
+solve' n index xs' = let (beg, end) = splitAt index xs'
+                     in if index >= length xs' then n else solve' (n + 1) (index + head end) (beg ++ (head end + 1) : drop 1 end) 
+
+solve'' :: Int -> Int -> S.Seq Int -> Int
+solve'' n ind xs = let value = S.index xs ind
+                   in if ind >= S.length xs then n else solve'' (n + 1) (ind + value) (S.update ind (value + 1) xs)
+
+solve2' n index xs' = let (beg, end) = splitAt index xs'
+                      in if index >= length xs' then n else solve2' (n + 1) (index + head end) (beg ++ (if head end < 3 then head end + 1 else head end - 1) : drop 1 end) 
+
+solve2'' :: Int -> Int -> S.Seq Int -> Int
+solve2'' n ind xs = let value = S.index xs ind
+                    in if ind >= S.length xs then n else solve2'' (n + 1) (ind + value) (S.update ind (if value < 3 then value + 1 else value - 1) xs) 
