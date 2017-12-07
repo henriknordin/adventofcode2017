@@ -6,21 +6,24 @@ module Lib
     , checksum2
     , naturals
     , edges
+    , manhattan
     , graph
     , valid
     , valid2
     , input5
     , parse
-    , solve
-    , solve'
-    , solve2'
     , solve''
     , solve2''
+    , input6
+    , dists
+
+    , input7
     ) where
 
 import Data.Char (digitToInt)
 import Data.List (sort, group, unfoldr)
-import qualified Data.Sequence as S (Seq, index, length, update)
+import qualified Data.Sequence as S (Seq, index, length, update, elemIndexL, fromList)
+import Data.Maybe (fromJust)
 
 import Debug.Trace (trace)
 
@@ -88,24 +91,19 @@ data Spiral = Start
 naturals :: [Int]
 naturals = iterate (+1) 1
 
--- concatMap (replicate 2) [1, 2..]
--- List should be built as 1, 1, 2, 2, 3, 3, 4, 4, 5, 5
---create :: [Spiral Int] -> [Spiral Int]
---create [] = [Start 1]
--- create x:xs  = create'
---  where create'
-
 edges :: [Int]
 edges = concatMap (replicate 2) [1, 2..]
 
---graph :: [Spiral]
-graph = unfoldr (\b -> Just (create b, b + 1)) 1 
---foldr (\n acc -> acc ++ create n) [] [1, 2..]
-  where 
-    create :: Int -> [Spiral]
-    create n 
-      | n `mod` 2 == 1 = replicate n R ++ replicate n U
-      | n `mod` 2 == 0 = replicate n L ++ replicate n D
+graph :: [Spiral]
+graph = concat $ zipWith (\a b -> replicate a b) edges (cycle [R, U, L, D])   
+
+manhattan n = (\(h, v) -> abs h + abs v) $ foldr step (0, 0) $ take (n - 1) graph
+  where
+    step R (h, v) = (h + 1, v)
+    step U (h, v) = (h, v + 1)
+    step L (h, v) = (h - 1, v)
+    step D (h, v) = (h, v - 1)
+
 
 valid :: String -> Bool
 valid xs = all (\x -> length x == 1) $ group $ sort $ words xs
@@ -118,24 +116,50 @@ valid2 xs = all (\x -> length x == 1) $ group $ sort $ map sort $ words xs
 --input5 :: String
 input5 = map (\x -> read x :: Int) $ words "0 3 0 1 -3"
 
---solve :: [int] -> int
-solve xs = solve' 0 xs
-  where
-    solve' index xs' = let (beg, end) = splitAt index xs'
-                       in solve' (head end) (beg ++ (head end + 1) : drop 1 end)
-
---solve' index xs' | trace ("solve " ++ show index ++ " " ++ show xs') 
-
-solve' n index xs' = let (beg, end) = splitAt index xs'
-                     in if index >= length xs' then n else solve' (n + 1) (index + head end) (beg ++ (head end + 1) : drop 1 end) 
-
 solve'' :: Int -> Int -> S.Seq Int -> Int
 solve'' n ind xs = let value = S.index xs ind
                    in if ind >= S.length xs then n else solve'' (n + 1) (ind + value) (S.update ind (value + 1) xs)
 
-solve2' n index xs' = let (beg, end) = splitAt index xs'
-                      in if index >= length xs' then n else solve2' (n + 1) (index + head end) (beg ++ (if head end < 3 then head end + 1 else head end - 1) : drop 1 end) 
-
 solve2'' :: Int -> Int -> S.Seq Int -> Int
 solve2'' n ind xs = let value = S.index xs ind
                     in if ind >= S.length xs then n else solve2'' (n + 1) (ind + value) (S.update ind (if value < 3 then value + 1 else value - 1) xs) 
+input6 :: S.Seq Int
+input6 = S.fromList [14, 0, 15, 12, 11, 11, 3, 5, 1, 6, 8, 4, 9, 1, 8, 4]
+
+dists :: S.Seq Int -> (S.Seq Int, Int)
+dists xs = dists 1 [] xs
+  where 
+    dists cycles combs xs' = let next = redistribute xs'
+                                 nextCombs = next : combs
+                      in if next `elem` combs then (next, cycles) else dists (cycles +1) nextCombs next
+
+-- advent 6-2: use input of advent 6-1 - 1 => 1037
+
+redistribute :: S.Seq Int ->  S.Seq Int
+redistribute xs = let blocks = maximum xs
+                      ind    = fromJust $ S.elemIndexL blocks xs 
+                  in redistribute' blocks ind (S.update ind 0 xs)
+  where 
+    redistribute' :: Int -> Int -> S.Seq Int -> S.Seq Int
+    redistribute' blocks' ind' xs' = let nextInd = if ind' == length xs' - 1 then 0 else ind' + 1
+                                         value = S.index xs' nextInd
+                                       in if blocks' > 0 then redistribute' (blocks' - 1) nextInd (S.update nextInd (value + 1) xs') else xs'
+
+
+
+
+input7 :: [String]
+input7 = 
+  [ "pbga (66)"
+  , "xhth (57)"
+  , "ebii (61)"
+  , "havc (66)"
+  , "ktlj (57)"
+  , "fwft (72) -> ktlj, cntj, xhth"
+  , "qoyq (66)"
+  , "padx (45) -> pbga, havc, qoyq"
+  , "tknk (41) -> ugml, padx, fwft"
+  , "jptl (61)"
+  , "ugml (68) -> gyxo, ebii, jptl"
+  , "gyxo (61)"
+  , "cntj (57)"]
