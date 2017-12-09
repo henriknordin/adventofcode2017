@@ -17,15 +17,13 @@ module Lib
     , input6
     , dists
 
-    , input7
     ) where
 
 import Data.Char (digitToInt)
-import Data.List (sort, group, unfoldr)
+import Data.List (sort, group, unfoldr, isInfixOf, partition, find, sortBy)
 import qualified Data.Sequence as S (Seq, index, length, update, elemIndexL, fromList)
-import Data.Maybe (fromJust)
+import Data.Maybe (fromJust, isJust)
 
-import Debug.Trace (trace)
 
 captcha :: String -> Int
 captcha xs = calculate (digitToInt $ head xs) (map digitToInt xs)
@@ -148,18 +146,3 @@ redistribute xs = let blocks = maximum xs
 
 
 
-input7 :: [String]
-input7 = 
-  [ "pbga (66)"
-  , "xhth (57)"
-  , "ebii (61)"
-  , "havc (66)"
-  , "ktlj (57)"
-  , "fwft (72) -> ktlj, cntj, xhth"
-  , "qoyq (66)"
-  , "padx (45) -> pbga, havc, qoyq"
-  , "tknk (41) -> ugml, padx, fwft"
-  , "jptl (61)"
-  , "ugml (68) -> gyxo, ebii, jptl"
-  , "gyxo (61)"
-  , "cntj (57)"]

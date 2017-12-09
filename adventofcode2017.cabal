@@ -20,6 +20,7 @@ description:         Please see the README on Github at <https://github.com/gith
 library
   hs-source-dirs:      src
   exposed-modules:     Lib
+                     , Advent7
   build-depends:       base >= 4.7 && < 5
                      , containers
                      , matrix
