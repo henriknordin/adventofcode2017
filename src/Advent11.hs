@@ -19,6 +19,16 @@ step :: (Int, Int) -> String -> (Int, Int)
 step (x, y) d = let (x', y') = direction d
                 in (x + x', y + y')
 
+walk' :: [String] -> (Int, Int, Int)
+walk' = foldl step' (0, 0, 0)
+
+step' :: (Int, Int, Int) -> String -> (Int, Int, Int)
+step' (x, y, m) d = let (x', y') = direction d
+                        nextX = x + x'
+                        nextY = y + y'
+                        nextM = max m $ dist (nextX, nextY)
+                    in (nextX, nextY, nextM)
+
 -- NW|N |
 -- --+--+--
 -- SW|  |NE
