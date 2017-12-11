@@ -6,6 +6,7 @@ import Lib
 import Advent7 (buildTree, root, unbalanced)
 import Advent8 (process, advent8)
 import Advent9 (scoreStream, countGarbage)
+import Advent10 
 
 main :: IO ()
 main = do 
@@ -33,10 +34,13 @@ main = do
 
   content8 <- readFile "/home/henrik/projects/adventofcode2017/data/advent8.txt"
   let ls8 = lines content8
-  putStrLn $ "Advent 8-1: " ++ show (advent8 $ fst $ process ls8)
-  putStrLn $ "Advent 8-2: " ++ show (snd $ process ls8)
+  --putStrLn $ "Advent 8-1: " ++ show (advent8 $ fst $ process ls8)
+  --putStrLn $ "Advent 8-2: " ++ show (snd $ process ls8)
   
   content9 <- readFile "/home/henrik/projects/adventofcode2017/data/advent9.txt"
   let ls9 = lines content9
   putStrLn $ "Advent 9-1: " ++ show (scoreStream $ head ls9 )
   putStrLn $ "Advent 9-2: " ++ show (countGarbage $ head ls9)
+
+  putStrLn $ "Advent 10-1: " ++ show answer10_1
+  putStrLn $ "Advent 10-2: " ++ show answer10_2

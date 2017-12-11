@@ -23,6 +23,7 @@ library
                      , Advent7
                      , Advent8
                      , Advent9
+                     , Advent10
   build-depends:       base >= 4.7 && < 5
                      , containers
                      , matrix
