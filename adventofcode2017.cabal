@@ -24,8 +24,10 @@ library
                      , Advent8
                      , Advent9
                      , Advent10
+                     , Advent11
   build-depends:       base >= 4.7 && < 5
                      , containers
+                     , split
                      , matrix
   default-language:    Haskell2010
 
