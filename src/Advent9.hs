@@ -6,8 +6,6 @@ module Advent9
     , countGarbage
     ) where
 
-import Debug.Trace
-
 input :: [String]
 input =
   [ "{}"
@@ -43,7 +41,7 @@ filterGarbage (x : xs)   = x : filterGarbage xs
 
 countGarbage :: String -> Int
 countGarbage xs = let xs' = filterExclamation xs
-                  in trace (show xs') $ countGarbage' xs' 0
+                  in countGarbage' xs' 0
   where
     countGarbage' :: String -> Int -> Int
     countGarbage' [] n = n
