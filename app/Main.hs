@@ -7,6 +7,7 @@ import qualified Advent1 as A1 (answer1, answer2)
 import qualified Advent2 as A2 (answer1, answer2)
 
 import qualified Advent4 as A4 (answer1, answer2)
+import qualified Advent5 as A5 (answer1, answer2)
 import Advent7 (buildTree, root, unbalanced)
 import Advent8 (process, advent8)
 import Advent9 (scoreStream, countGarbage)
@@ -32,12 +33,9 @@ main = do
  
   content5 <- readFile "data/advent5.txt"
   let ls5 = lines content5
-  --putStrLn $ "Advent 5-1: " ++ solve' 0 (map (\x -> read x :: Int) $ words ls5)
-  --putStrLn $ "Advent 5-1: " ++ show (solve' 0 0 (concat $ parse ls5))
-  --putStrLn $ "Advent 5-2: " ++ show (solve2' 0 0 (concat $ parse ls5))
-  --putStrLn $ "Advent 5-1: " ++ show (solve'' 0 0 (S.fromList $ concat $ parse ls5))
-  --putStrLn $ "Advent 5-2: " ++ show (solve2'' 0 0 (S.fromList $ concat $ parse ls5))
-
+  putStrLn $ "Advent 5-1: " ++ show (A5.answer1 ls5)
+  putStrLn $ "Advent 5-2: " ++ show (A5.answer2 ls5)
+  
   content7 <- readFile "data/advent7.txt"
   let ls7 = lines content7
   let tower = buildTree ls7

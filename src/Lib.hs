@@ -1,8 +1,5 @@
 module Lib
-    ( input5
-    , solve''
-    , solve2''
-    , input6
+    ( input6
     , dists
     ) where
 
@@ -10,17 +7,6 @@ import Data.List (sort, group, unfoldr, isInfixOf, partition, find, sortBy)
 import qualified Data.Sequence as S (Seq, index, length, update, elemIndexL, fromList)
 import Data.Maybe (fromJust, isJust)
 
--- parse xs = map (map (\x -> read x :: Int)) $ map words xs
---input5 :: String
-input5 = map (\x -> read x :: Int) $ words "0 3 0 1 -3"
-
-solve'' :: Int -> Int -> S.Seq Int -> Int
-solve'' n ind xs = let value = S.index xs ind
-                   in if ind >= S.length xs then n else solve'' (n + 1) (ind + value) (S.update ind (value + 1) xs)
-
-solve2'' :: Int -> Int -> S.Seq Int -> Int
-solve2'' n ind xs = let value = S.index xs ind
-                    in if ind >= S.length xs then n else solve2'' (n + 1) (ind + value) (S.update ind (if value < 3 then value + 1 else value - 1) xs) 
 input6 :: S.Seq Int
 input6 = S.fromList [14, 0, 15, 12, 11, 11, 3, 5, 1, 6, 8, 4, 9, 1, 8, 4]
 
