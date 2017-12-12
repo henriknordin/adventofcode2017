@@ -7,6 +7,7 @@ import Advent7 (buildTree, root, unbalanced)
 import Advent8 (process, advent8)
 import Advent9 (scoreStream, countGarbage)
 import Advent10 
+import qualified Advent12 as A12 (answer1, answer2)
 
 main :: IO ()
 main = do 
@@ -22,7 +23,7 @@ main = do
   --putStrLn $ "Advent 5-1: " ++ solve' 0 (map (\x -> read x :: Int) $ words ls5)
   --putStrLn $ "Advent 5-1: " ++ show (solve' 0 0 (concat $ parse ls5))
   --putStrLn $ "Advent 5-2: " ++ show (solve2' 0 0 (concat $ parse ls5))
-  putStrLn $ "Advent 5-1: " ++ show (solve'' 0 0 (S.fromList $ concat $ parse ls5))
+  --putStrLn $ "Advent 5-1: " ++ show (solve'' 0 0 (S.fromList $ concat $ parse ls5))
   --putStrLn $ "Advent 5-2: " ++ show (solve2'' 0 0 (S.fromList $ concat $ parse ls5))
 
   content7 <- readFile "/home/henrik/projects/adventofcode2017/data/advent7.txt"
@@ -44,3 +45,8 @@ main = do
 
   putStrLn $ "Advent 10-1: " ++ show answer10_1
   putStrLn $ "Advent 10-2: " ++ show answer10_2
+
+  content12 <- readFile "/home/henrik/projects/adventofcode2017/data/advent12.txt"
+  let ls12 = lines content12
+  putStrLn $ "Advent 12-1: " ++ show (A12.answer1 ls12) 
+  putStrLn $ "Advent 12-2: " ++ show (A12.answer2 ls12)
