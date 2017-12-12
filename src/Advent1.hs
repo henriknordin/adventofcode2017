@@ -1,6 +1,8 @@
 module Advent1
     ( answer1
     , answer2
+    , captcha
+    , captcha2
     ) where
 
 import Data.Char (digitToInt)
