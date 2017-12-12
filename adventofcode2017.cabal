@@ -23,6 +23,7 @@ library
   exposed-modules:     Lib
                      , Advent1
                      , Advent2
+                     , Advent3
                      , Advent7
                      , Advent8
                      , Advent9
