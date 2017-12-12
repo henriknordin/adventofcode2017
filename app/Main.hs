@@ -4,6 +4,7 @@ import System.IO (readFile)
 import Data.Sequence as S (fromList)
 import Lib
 import qualified Advent1 as A1 (answer1, answer2)
+import qualified Advent2 as A2 (answer1, answer2)
 import Advent7 (buildTree, root, unbalanced)
 import Advent8 (process, advent8)
 import Advent9 (scoreStream, countGarbage)
@@ -16,6 +17,11 @@ main = do
   let ls1 = lines content1
   putStrLn $ "Advent 1-1: " ++ show (A1.answer1 ls1) 
   putStrLn $ "Advent 1-2: " ++ show (A1.answer2 ls1)
+  
+  content2 <- readFile "data/advent2.txt"
+  let ls2 = lines content2
+  putStrLn $ "Advent 2-1: " ++ show (A2.answer1 ls2) 
+  putStrLn $ "Advent 2-2: " ++ show (A2.answer2 ls2)
   
   content <- readFile "data/advent4.txt"
   let ls = lines content

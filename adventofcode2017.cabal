@@ -22,6 +22,7 @@ library
   hs-source-dirs:      src
   exposed-modules:     Lib
                      , Advent1
+                     , Advent2
                      , Advent7
                      , Advent8
                      , Advent9
