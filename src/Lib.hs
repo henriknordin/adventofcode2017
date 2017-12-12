@@ -1,7 +1,5 @@
 module Lib
-    ( valid
-    , valid2
-    , input5
+    ( input5
     , solve''
     , solve2''
     , input6
@@ -11,16 +9,6 @@ module Lib
 import Data.List (sort, group, unfoldr, isInfixOf, partition, find, sortBy)
 import qualified Data.Sequence as S (Seq, index, length, update, elemIndexL, fromList)
 import Data.Maybe (fromJust, isJust)
-
-
-
-
-valid :: String -> Bool
-valid xs = all (\x -> length x == 1) $ group $ sort $ words xs
-
-valid2 :: String -> Bool
-valid2 xs = all (\x -> length x == 1) $ group $ sort $ map sort $ words xs
-
 
 -- parse xs = map (map (\x -> read x :: Int)) $ map words xs
 --input5 :: String
