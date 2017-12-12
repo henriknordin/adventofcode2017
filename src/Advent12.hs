@@ -3,7 +3,6 @@ module Advent12
     , answer2
     ) where
 
-import Data.List (elemIndices)
 import Data.List.Split (splitOn)
 import Data.Graph as G
 
