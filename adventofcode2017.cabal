@@ -21,6 +21,7 @@ description:         Please see the README on Github at <https://github.com/gith
 library
   hs-source-dirs:      src
   exposed-modules:     Lib
+                     , Advent1
                      , Advent7
                      , Advent8
                      , Advent9

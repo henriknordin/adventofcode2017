@@ -3,6 +3,7 @@ module Main where
 import System.IO (readFile)
 import Data.Sequence as S (fromList)
 import Lib
+import qualified Advent1 as A1 (answer1, answer2)
 import Advent7 (buildTree, root, unbalanced)
 import Advent8 (process, advent8)
 import Advent9 (scoreStream, countGarbage)
@@ -11,6 +12,11 @@ import qualified Advent12 as A12 (answer1, answer2)
 
 main :: IO ()
 main = do 
+  content1 <- readFile "data/advent1.txt"
+  let ls1 = lines content1
+  putStrLn $ "Advent 1-1: " ++ show (A1.answer1 ls1) 
+  putStrLn $ "Advent 1-2: " ++ show (A1.answer2 ls1)
+  
   content <- readFile "data/advent4.txt"
   let ls = lines content
   let ans = length . filter (== True) $ map valid ls
