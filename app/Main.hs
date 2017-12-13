@@ -14,6 +14,7 @@ import Advent8 (process, advent8)
 import Advent9 (scoreStream, countGarbage)
 import Advent10 
 import qualified Advent12 as A12 (answer1, answer2)
+import qualified Advent13 as A13 (answer1, answer2)
 
 main :: IO ()
 main = do 
@@ -35,12 +36,14 @@ main = do
   content5 <- readFile "data/advent5.txt"
   let ls5 = lines content5
   putStrLn $ "Advent 5-1: " ++ show (A5.answer1 ls5)
-  putStrLn $ "Advent 5-2: " ++ show (A5.answer2 ls5)
+  -- slow! 
+  -- putStrLn $ "Advent 5-2: " ++ show (A5.answer2 ls5)
   
   content6 <- readFile "data/advent6.txt"
   let ls6 = lines content6
-  putStrLn $ "Advent 6-1: " ++ show (A6.answer1 ls6)
-  putStrLn $ "Advent 6-2: " ++ show (A6.answer2 ls6)
+  -- slow!
+  -- putStrLn $ "Advent 6-1: " ++ show (A6.answer1 ls6)
+  -- putStrLn $ "Advent 6-2: " ++ show (A6.answer2 ls6)
   
   content7 <- readFile "data/advent7.txt"
   let ls7 = lines content7
@@ -66,3 +69,9 @@ main = do
   let ls12 = lines content12
   putStrLn $ "Advent 12-1: " ++ show (A12.answer1 ls12) 
   putStrLn $ "Advent 12-2: " ++ show (A12.answer2 ls12)
+
+  content13 <- readFile "data/advent13.txt"
+  let ls13 = lines content13
+  --putStrLn $ "Advent 13-1: " ++ show (A13.answer1 ls13) 
+  putStrLn $ "Advent 13-2: " ++ show (A13.answer2 ls13)
+
