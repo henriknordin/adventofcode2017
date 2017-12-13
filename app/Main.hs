@@ -5,7 +5,7 @@ import Data.Sequence as S (fromList)
 import Lib
 import qualified Advent1 as A1 (answer1, answer2)
 import qualified Advent2 as A2 (answer1, answer2)
-
+import qualified Advent3 as A3 (answer1, answer2)
 import qualified Advent4 as A4 (answer1, answer2)
 import qualified Advent5 as A5 (answer1, answer2)
 import qualified Advent6 as A6 (answer1, answer2)
@@ -27,6 +27,9 @@ main = do
   let ls2 = lines content2
   putStrLn $ "Advent 2-1: " ++ show (A2.answer1 ls2) 
   putStrLn $ "Advent 2-2: " ++ show (A2.answer2 ls2)
+
+  putStrLn $ "Advent 3-1: " ++ show (A3.answer1 361527)
+  putStrLn $ "Advent 3-2: " ++ show (A3.answer2 361527)
   
   content4 <- readFile "data/advent4.txt"
   let ls4 = lines content4
@@ -72,6 +75,7 @@ main = do
 
   content13 <- readFile "data/advent13.txt"
   let ls13 = lines content13
-  --putStrLn $ "Advent 13-1: " ++ show (A13.answer1 ls13) 
-  putStrLn $ "Advent 13-2: " ++ show (A13.answer2 ls13)
+  putStrLn $ "Advent 13-1: " ++ show (A13.answer1 ls13) 
+  -- slow!
+  -- putStrLn $ "Advent 13-2: " ++ show (A13.answer2 ls13)
 
