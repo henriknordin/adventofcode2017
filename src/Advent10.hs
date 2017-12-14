@@ -7,9 +7,9 @@ import Data.Bits (xor)
 import Numeric (showHex)
 import Data.Char (ord)
 
-data A = MkA { ring :: [Int]
-             , index :: Int
-             , skip :: Int
+data A = MkA { ring :: ![Int]
+             , index :: !Int
+             , skip :: !Int
              } deriving Show
 
 mkA :: Int -> A
@@ -56,7 +56,7 @@ denseHash a = calculate $ ring a
   where
     calculate :: [Int] -> [Int]
     calculate [] = []
-    calculate xs = (foldl (\b a -> b `xor` a) 0 $ take 16 xs) : calculate (drop 16 xs)
+    calculate xs = foldl xor 0 (take 16 xs) : calculate (drop 16 xs)
 
 hexadecimal :: [Int] -> String
-hexadecimal xs = concat $ map (\x -> if length x == 1 then "0" ++ x else x) $ foldl (\acc x -> acc ++ [showHex x ""]) [] xs
+hexadecimal xs = concatMap (\x -> if length x == 1 then "0" ++ x else x) $ foldl (\acc x -> acc ++ [showHex x ""]) [] xs
