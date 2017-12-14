@@ -15,6 +15,7 @@ import Advent9 (scoreStream, countGarbage)
 import Advent10 
 import qualified Advent12 as A12 (answer1, answer2)
 import qualified Advent13 as A13 (answer1, answer2)
+import qualified Advent14 as A14 (answer1, answer2)
 
 main :: IO ()
 main = do 
@@ -78,4 +79,7 @@ main = do
   putStrLn $ "Advent 13-1: " ++ show (A13.answer1 ls13) 
   -- slow!
   -- putStrLn $ "Advent 13-2: " ++ show (A13.answer2 ls13)
+
+  putStrLn $ "Advent 14-1: " ++ show (A14.answer1 "ugkiagan")
+  putStrLn $ "Advent 14-2: " ++ show (A14.answer2 "ugkiagan")
 
