@@ -16,6 +16,7 @@ import Advent10
 import qualified Advent12 as A12 (answer1, answer2)
 import qualified Advent13 as A13 (answer1, answer2)
 import qualified Advent14 as A14 (answer1, answer2)
+import qualified Advent15 as A15 (answer1, answer2)
 
 main :: IO ()
 main = do 
@@ -80,6 +81,9 @@ main = do
   -- slow!
   -- putStrLn $ "Advent 13-2: " ++ show (A13.answer2 ls13)
 
-  putStrLn $ "Advent 14-1: " ++ show (A14.answer1 "ugkiagan")
-  putStrLn $ "Advent 14-2: " ++ show (A14.answer2 "ugkiagan")
+  --putStrLn $ "Advent 14-1: " ++ show (A14.answer1 "ugkiagan")
+  --putStrLn $ "Advent 14-2: " ++ show (A14.answer2 "ugkiagan")
+
+  putStrLn $ "Advent 15-1: " ++ show (A15.answer1 883 879)
+  putStrLn $ "Advent 15-2: " ++ show (A15.answer2 883 879)
 
