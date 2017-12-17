@@ -5,6 +5,7 @@ import qualified Data.Foldable as F (toList)
 import qualified Data.Sequence as S
 import Data.Maybe (fromJust)
 
+import Data.Tuple (swap)
 
 programs :: String
 programs = "abcdefghijklmnop"
@@ -30,7 +31,8 @@ dance :: String -> [String] -> String
 dance = foldl dancestep
   where
     dancestep :: String -> String -> String
-    dancestep ps ('s':xs) = spin ps (toInt xs)
+    --dancestep ps ('s':xs) = spin ps (toInt xs)
+    dancestep ps ('s':xs) = rotateRight (toInt xs) ps
     dancestep ps ('x':xs) = let (a,b) = parseX xs
                             in exchange ps a b
     dancestep ps ('p':xs) = let (a, b) = parseP xs
@@ -47,6 +49,12 @@ parseP s = let a = head s
 
 toInt :: String -> Int
 toInt s = read s :: Int
+
+rotateLeft :: Int -> [a] -> [a]
+rotateLeft n = uncurry (++) . swap . splitAt n
+
+rotateRight :: Int -> [a] -> [a]
+rotateRight n xs = uncurry (++) . swap $ splitAt (length xs - n) xs
 
 spin :: [a] -> Int -> [a] 
 spin xs s = let (beg, end) = splitAt (length xs - s) xs
@@ -66,4 +74,3 @@ partner xs a b = let seq = S.fromList xs
                      seq' = S.update ib a (S.update ia b seq)
                   in F.toList seq' 
 
---s1, a spin of size 1: eabcd
