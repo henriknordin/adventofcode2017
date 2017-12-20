@@ -40,6 +40,7 @@ library
                      , Advent17
                      , Advent18
                      , Advent19
+                     , Advent20
   build-depends:       base >= 4.7 && < 5
                      , containers >= 0.5.8
                      , split
