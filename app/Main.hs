@@ -21,7 +21,8 @@ import qualified Advent16 as A16 (answer1, answer2)
 import qualified Advent17 as A17 (answer1, answer2)
 import qualified Advent18 as A18 (answer1, answer2)
 import qualified Advent19 as A19 (answer1, answer2)
-import qualified Advent20 as A20 
+import qualified Advent20 as A20 (answer1, answer2)
+import qualified Advent21 as A21  
 
 main :: IO ()
 main = do 
@@ -114,3 +115,8 @@ main = do
   let ls20 = lines content20
   putStrLn $ "Advent 20-1: " ++ show (A20.answer1 ls20) 
   putStrLn $ "Advent 20-2: " ++ show (A20.answer2 ls20) 
+
+  content21 <- readFile "data/advent21.txt"
+  let ls21 = lines content21
+  putStrLn $ "Advent 21-1: " ++ show (A21.answer1 ls21) 
+  putStrLn $ "Advent 22-2: " ++ show (A21.answer2 ls21) 
