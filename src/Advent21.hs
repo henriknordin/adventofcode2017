@@ -29,30 +29,6 @@ answer1 = countOn . enhance 5 . parse
 answer2 :: [String] -> Int
 answer2 = countOn . enhance 18 . parse
 
---answer2 :: [String] -> Int
---answer2 xs = let grid = [t0]
---                 gridsByOccurence = Ma.empty
---             in go 5 grid $ parse xs
---  where
---    go 0 m rs = let (mult', m') = zoom m rs
---                    n = (length . filter (== '#') . toList) m'
---                    in trace (show n) n * mult * mult'
---    go n grids rs = let (mult', m') = zoom m rs 
---                    in trace (show n ++ " " ++ show mult') go (mult * mult') (n - 1) m' rs
-
---enhance2 :: Int -> [(Int, Grid)] -> Rules -> Int
---enhance2 0 gs _  = foldl (\acc (m, g) -> (m * countOn g) + acc) 0 gs
---enhance2 n gs rs = let x9gs = map (\(m, g) -> (m, (flip enhance2x2 rs . flip enhance2x2 rs . flip enhance3x3 rs) g)) gs
---                       x3gs = concatMap (\(m, g) -> split3x3 m g) x9gs
---                       sorted = sortBy (comparing snd) x3gs
---                       grouped = groupBy (\a b -> snd a == snd b) sorted
---                   in trace (show grouped) $ undefined
---
---split3x3 :: Int -> Grid -> [(Int, Grid)]
---split3x3 m g = [(m, M.submatrix 1 3 1 3 g), (m, M.submatrix 1 3 4 6 g), (m, M.submatrix 1 3 7 9 g),
---                (m, M.submatrix 4 6 1 3 g), (m, M.submatrix 4 6 4 6 g), (m, M.submatrix 4 6 7 9 g),
---                (m, M.submatrix 7 9 1 3 g), (m, M.submatrix 7 9 4 6 g), (m, M.submatrix 7 9 7 9 g)]
-
 countOn :: Grid -> Int
 countOn = length . filter (== '#') . toList
 
@@ -71,13 +47,21 @@ enhance' m rs
 enhance2x2 :: Grid -> Rules -> Grid 
 enhance2x2 m rs
   | M.ncols m == 2 && M.nrows m == 2 = fromJust $ Ma.lookup m rs
-  | M.ncols m == 2                   = let t = enhance2x2 (M.submatrix 1 2 1 2 m) rs
-                                           b = enhance2x2 (M.submatrix 3 (M.nrows m) 1 2 m) rs
+  | M.ncols m == 2                   = let half = M.nrows m `div` 2
+                                           cut = if half `mod` 2 == 0 then half else 2
+                                           t = enhance2x2 (M.submatrix 1 cut 1 2 m) rs
+                                           b = enhance2x2 (M.submatrix (cut + 1) (M.nrows m) 1 2 m) rs
                                        in t `seq` b `seq` t <-> b
-  | M.nrows m == 2                   = let l = enhance2x2 (M.submatrix 1 2 1 2 m) rs
-                                           r = enhance2x2 (M.submatrix 1 2 3 (M.ncols m) m) rs
+  | M.nrows m == 2                   = let half = M.ncols m `div` 2
+                                           cut = if half `mod` 2 == 0 then half else 2
+                                           l = enhance2x2 (M.submatrix 1 2 1 cut m) rs
+                                           r = enhance2x2 (M.submatrix 1 2 (cut + 1) (M.ncols m) m) rs
                                        in l `seq` r `seq` l <|> r
-  | otherwise                        = let (tl, tr, bl, br) = splitBlocks 2 2 m
+  | otherwise                        = let halfr = M.nrows m `div` 2
+                                           cutr = if halfr `mod` 2 == 0 then halfr else 2 
+                                           halfc = M.ncols m `div` 2
+                                           cutc = if halfc `mod` 2 == 0 then halfc else 2 
+                                           (tl, tr, bl, br) = splitBlocks cutr cutc m
                                            tl' = enhance2x2 tl rs
                                            tr' = enhance2x2 tr rs
                                            bl' = enhance2x2 bl rs
@@ -87,13 +71,19 @@ enhance2x2 m rs
 enhance3x3 :: Grid -> Rules -> Grid
 enhance3x3 m rs
   | M.ncols m == 3 && M.nrows m == 3 = fromJust $ Ma.lookup m rs
-  | M.ncols m == 3                   = let t = enhance3x3 (M.submatrix 1 3 1 3 m) rs
-                                           b = enhance3x3 (M.submatrix 4 (M.nrows m) 1 3 m) rs
+  | M.ncols m == 3                   = let half = M.nrows m `div` 2
+                                           cut = if half `mod` 3 == 0 then half else 3
+                                           t = enhance3x3 (M.submatrix 1 cut 1 3 m) rs
+                                           b = enhance3x3 (M.submatrix (cut + 1) (M.nrows m) 1 3 m) rs
                                        in t `seq` b `seq` t <-> b
-  | M.nrows m == 3                   = let l = enhance3x3 (M.submatrix 1 3 1 3 m) rs 
-                                           r = enhance3x3 (M.submatrix 1 3 4 (M.ncols m) m) rs
+  | M.nrows m == 3                   = let half = M.ncols m `div` 2
+                                           cut = if half `mod` 3 == 0 then half else 3
+                                           l = enhance3x3 (M.submatrix 1 3 1 cut m) rs 
+                                           r = enhance3x3 (M.submatrix 1 3 (cut + 1) (M.ncols m) m) rs
                                        in l `seq` r `seq` l <|> r
-  | otherwise                        = let (tl, tr, bl, br) = splitBlocks 3 3 m
+  | otherwise                        = let half = M.nrows m `div` 2
+                                           cut = if half `mod` 3 == 0 then half else 3
+                                           (tl, tr, bl, br) = splitBlocks 3 3 m
                                            tl' = enhance3x3 tl rs
                                            tr' = enhance3x3 tr rs
                                            bl' = enhance3x3 bl rs
