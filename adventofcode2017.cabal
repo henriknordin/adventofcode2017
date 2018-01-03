@@ -43,6 +43,7 @@ library
                      , Advent20
                      , Advent21
                      , Advent22
+                     , Advent23
   build-depends:       base >= 4.7 && < 5
                      , containers >= 0.5.8
                      , split

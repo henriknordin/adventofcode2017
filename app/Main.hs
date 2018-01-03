@@ -24,6 +24,7 @@ import qualified Advent19 as A19 (answer1, answer2)
 import qualified Advent20 as A20 (answer1, answer2)
 import qualified Advent21 as A21 (answer1, answer2)
 import qualified Advent22 as A22 (answer1, answer2)
+import qualified Advent23 as A23 
 
 main :: IO ()
 main = do 
@@ -99,30 +100,35 @@ main = do
 --  putStrLn $ "Advent 16-1: " ++ show (A16.answer1 $ head ls16) 
 --  putStrLn $ "Advent 16-2: " ++ show (A16.answer2 $ head ls16)
 
-  putStrLn $ "Advent 17-1: " ++ show (A17.answer1 349)
-  putStrLn $ "Advent 17-2: " ++ show (A17.answer2 349)
+--  putStrLn $ "Advent 17-1: " ++ show (A17.answer1 349)
+--  putStrLn $ "Advent 17-2: " ++ show (A17.answer2 349)
   
 --  content18 <- readFile "data/advent18.txt"
 --  let ls18 = lines content18
 --  putStrLn $ "Advent 18-1: " ++ show (A18.answer1 ls18) 
 --  putStrLn $ "Advent 18-2: " ++ show (A18.answer2 ls18)
   
-  content19 <- readFile "data/advent19.txt"
-  let ls19 = lines content19
-  putStrLn $ "Advent 19-1: " ++ show (A19.answer1 ls19) 
-  putStrLn $ "Advent 19-2: " ++ show (A19.answer2 ls19) 
+--  content19 <- readFile "data/advent19.txt"
+--  let ls19 = lines content19
+--  putStrLn $ "Advent 19-1: " ++ show (A19.answer1 ls19) 
+--  putStrLn $ "Advent 19-2: " ++ show (A19.answer2 ls19) 
 
-  content20 <- readFile "data/advent20.txt"
-  let ls20 = lines content20
-  putStrLn $ "Advent 20-1: " ++ show (A20.answer1 ls20) 
-  putStrLn $ "Advent 20-2: " ++ show (A20.answer2 ls20) 
+--  content20 <- readFile "data/advent20.txt"
+--  let ls20 = lines content20
+--  putStrLn $ "Advent 20-1: " ++ show (A20.answer1 ls20) 
+--  putStrLn $ "Advent 20-2: " ++ show (A20.answer2 ls20) 
 
 --  content21 <- readFile "data/advent21.txt"
 --  let ls21 = lines content21
 --  putStrLn $ "Advent 21-1: " ++ show (A21.answer1 ls21) 
 --  putStrLn $ "Advent 21-2: " ++ show (A21.answer2 ls21) 
   
-  content22 <- readFile "data/advent22.txt"
-  let ls22 = lines content22
-  putStrLn $ "Advent 22-1: " ++ show (A22.answer1 ls22 10000) 
-  putStrLn $ "Advent 22-2: " ++ show (A22.answer2 ls22 10000000) 
+--  content22 <- readFile "data/advent22.txt"
+--  let ls22 = lines content22
+--  putStrLn $ "Advent 22-1: " ++ show (A22.answer1 ls22 10000) 
+--  putStrLn $ "Advent 22-2: " ++ show (A22.answer2 ls22 10000000) 
+  
+  content23 <- readFile "data/advent23.txt"
+  let ls23 = lines content23
+  putStrLn $ "Advent 23-1: " ++ show (A23.answer1 ls23) 
+  putStrLn $ "Advent 23-2: " ++ show (A23.answer2 ls23) 
