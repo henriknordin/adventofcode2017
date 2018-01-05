@@ -25,6 +25,7 @@ import qualified Advent20 as A20 (answer1, answer2)
 import qualified Advent21 as A21 (answer1, answer2)
 import qualified Advent22 as A22 (answer1, answer2)
 import qualified Advent23 as A23 
+import qualified Advent24 as A24 (answer1, answer2)
 
 main :: IO ()
 main = do 
@@ -128,7 +129,12 @@ main = do
 --  putStrLn $ "Advent 22-1: " ++ show (A22.answer1 ls22 10000) 
 --  putStrLn $ "Advent 22-2: " ++ show (A22.answer2 ls22 10000000) 
   
-  content23 <- readFile "data/advent23.txt"
-  let ls23 = lines content23
-  putStrLn $ "Advent 23-1: " ++ show (A23.answer1 ls23) 
-  putStrLn $ "Advent 23-2: " ++ show (A23.answer2 ls23) 
+--  content23 <- readFile "data/advent23.txt"
+--  let ls23 = lines content23
+--  putStrLn $ "Advent 23-1: " ++ show (A23.answer1 ls23) 
+--  putStrLn $ "Advent 23-2: " ++ show (A23.answer2 ls23) 
+
+  content24 <- readFile "data/advent24.txt"
+  let ls24 = lines content24
+  putStrLn $ "Advent 24-1: " ++ show (A24.answer1 ls24) 
+  putStrLn $ "Advent 24-2: " ++ show (A24.answer2 ls24) 
