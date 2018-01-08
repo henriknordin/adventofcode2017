@@ -1,8 +1,6 @@
 module Main where
 
 import System.IO (readFile)
---import Data.Sequence as S (fromList)
-import qualified Advent6 as A6 (answer1, answer2)
 import Advent7 (buildTree, root, unbalanced)
 import Advent8 (process, advent8)
 import Advent9 (scoreStream, countGarbage)
@@ -23,19 +21,13 @@ import qualified Advent24 as A24 (answer1, answer2)
 
 main :: IO ()
 main = do 
-  content6 <- readFile "data/advent6.txt"
-  let ls6 = lines content6
-  -- slow!
-  putStrLn $ "Advent 6-1: " ++ show (A6.answer1 ls6)
-  putStrLn $ "Advent 6-2: " ++ show (A6.answer2 ls6)
---  
---  content7 <- readFile "data/advent7.txt"
---  let ls7 = lines content7
---  let tower = buildTree ls7
---
---  putStrLn $ "Advent 7-1: " ++ show (root tower)
---  putStrLn $ "Advent 7-2: " ++ show (unbalanced tower 0)
---
+  content7 <- readFile "data/advent7.txt"
+  let ls7 = lines content7
+  let tower = buildTree ls7
+
+  putStrLn $ "Advent 7-1: " ++ show (root tower)
+  putStrLn $ "Advent 7-2: " ++ show (unbalanced tower 0)
+
 --  content8 <- readFile "data/advent8.txt"
 --  let ls8 = lines content8
 --  --putStrLn $ "Advent 8-1: " ++ show (advent8 $ fst $ process ls8)
