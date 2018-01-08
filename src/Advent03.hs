@@ -1,19 +1,14 @@
-module Advent3 
-    ( answer1
-    , answer2
-
-    , naturals
-    , edges
+module Advent03 
+    ( parseInput
     , manhattan
-    , graph
-
-    , cord
-    , update
-
+    , largerValue
     ) where
 
 import qualified Data.List as L (unfoldr)
 import qualified Data.Matrix as M (Matrix, zero, getElem, setElem)
+
+parseInput :: String -> Int
+parseInput x = read x :: Int
 
 answer1 :: Int -> Int
 answer1 = manhattan
@@ -21,19 +16,11 @@ answer1 = manhattan
 answer2 :: Int -> Int
 answer2 = largerValue
 
--- 1 2 3
--- 2 
--- 3
-
-
 data Direction = R   
                | U  
                | L 
                | D 
                deriving (Show)
-
-naturals :: [Int]
-naturals = iterate (+1) 1
 
 edges :: [Int]
 edges = concatMap (replicate 2) [1, 2..]
