@@ -2,7 +2,6 @@ module Main where
 
 import System.IO (readFile)
 import Data.Sequence as S (fromList)
-import qualified Advent4 as A4 (answer1, answer2)
 import qualified Advent5 as A5 (answer1, answer2)
 import qualified Advent6 as A6 (answer1, answer2)
 import Advent7 (buildTree, root, unbalanced)
@@ -25,11 +24,6 @@ import qualified Advent24 as A24 (answer1, answer2)
 
 main :: IO ()
 main = do 
---  content4 <- readFile "data/advent4.txt"
---  let ls4 = lines content4
---  putStrLn $ "Advent 4-1: " ++ show (A4.answer1 ls4) 
---  putStrLn $ "Advent 4-2: " ++ show (A4.answer2 ls4)
--- 
 --  content5 <- readFile "data/advent5.txt"
 --  let ls5 = lines content5
 --  putStrLn $ "Advent 5-1: " ++ show (A5.answer1 ls5)

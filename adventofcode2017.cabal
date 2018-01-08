@@ -24,7 +24,7 @@ library
                      , Advent01
                      , Advent02
                      , Advent03
-                     , Advent4
+                     , Advent04
                      , Advent5
                      , Advent6
                      , Advent7
@@ -80,6 +80,14 @@ executable solve02-exe
 executable solve03-exe
   hs-source-dirs:      app
   main-is:             Solve03.hs
+  ghc-options:         -threaded -rtsopts -with-rtsopts=-N
+  build-depends:       base
+                     , adventofcode2017
+  default-language:    Haskell2010
+
+executable solve04-exe
+  hs-source-dirs:      app
+  main-is:             Solve04.hs
   ghc-options:         -threaded -rtsopts -with-rtsopts=-N
   build-depends:       base
                      , adventofcode2017
