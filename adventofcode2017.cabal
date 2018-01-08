@@ -21,7 +21,7 @@ description:         Please see the README on Github at <https://github.com/henr
 library
   hs-source-dirs:      src
   exposed-modules:     Lib
-                     , Advent1
+                     , Advent01
                      , Advent2
                      , Advent3
                      , Advent4
@@ -58,6 +58,14 @@ executable adventofcode2017-exe
   ghc-options:         -threaded -rtsopts -with-rtsopts=-N
   build-depends:       base
                      , containers
+                     , adventofcode2017
+  default-language:    Haskell2010
+
+executable solve01-exe
+  hs-source-dirs:      app
+  main-is:             Solve01.hs
+  ghc-options:         -threaded -rtsopts -with-rtsopts=-N
+  build-depends:       base
                      , adventofcode2017
   default-language:    Haskell2010
 

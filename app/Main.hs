@@ -3,7 +3,6 @@ module Main where
 import System.IO (readFile)
 import Data.Sequence as S (fromList)
 import Lib
-import qualified Advent1 as A1 (answer1, answer2)
 import qualified Advent2 as A2 (answer1, answer2)
 import qualified Advent3 as A3 (answer1, answer2)
 import qualified Advent4 as A4 (answer1, answer2)
@@ -29,11 +28,6 @@ import qualified Advent24 as A24 (answer1, answer2)
 
 main :: IO ()
 main = do 
---  content1 <- readFile "data/advent1.txt"
---  let ls1 = lines content1
---  putStrLn $ "Advent 1-1: " ++ show (A1.answer1 ls1) 
---  putStrLn $ "Advent 1-2: " ++ show (A1.answer2 ls1)
---  
 --  content2 <- readFile "data/advent2.txt"
 --  let ls2 = lines content2
 --  putStrLn $ "Advent 2-1: " ++ show (A2.answer1 ls2) 
