@@ -1,6 +1,15 @@
 module Main where
 
 import System.IO (readFile)
+import System.Environment
+
+import qualified Advent01 as A01 (parseInput, captcha1, captcha2)
+import qualified Advent02 as A02 (parseInput, checksum1, checksum2)
+import qualified Advent03 as A03 (parseInput, manhattan, largerValue)
+import qualified Advent04 as A04 (parseInput, passphrases1, passphrases2)
+import qualified Advent05 as A05 (parseInput, steps1, steps2)
+import qualified Advent06 as A06 (parseInput, dists)
+
 import Advent7 (buildTree, root, unbalanced)
 import Advent8 (process, advent8)
 import Advent9 (scoreStream, countGarbage)
@@ -19,14 +28,68 @@ import qualified Advent22 as A22 (answer1, answer2)
 import qualified Advent23 as A23 
 import qualified Advent24 as A24 (answer1, answer2)
 
+import Lib (getInput)
+
+advent01 :: IO ()
+advent01 = do
+  input <- A01.parseInput <$> getInput 1
+  putStrLn $ "Advent 1-1: " ++ show (A01.captcha1 input)  -- 1223
+  putStrLn $ "Advent 1-2: " ++ show (A01.captcha2 input)  -- 1284
+
+advent02 :: IO ()
+advent02 = do
+  input <- A02.parseInput <$> getInput 2
+  putStrLn $ "Advent 2-1: " ++ show (A02.checksum1 input)  -- 37923
+  putStrLn $ "Advent 2-2: " ++ show (A02.checksum2 input)  -- 263
+
+advent03 :: IO ()
+advent03 = do
+  input <- A03.parseInput <$> getInput 3
+  putStrLn $ "Advent 3-1: " ++ show (A03.manhattan input)  -- 362
+  putStrLn $ "Advent 3-2: " ++ show (A03.largerValue input)  -- 361527
+
+advent04 :: IO ()
+advent04 = do 
+  input <- A04.parseInput <$> getInput 4
+  putStrLn $ "Advent 4-1: " ++ show (A04.passphrases1 input)  -- 477
+  putStrLn $ "Advent 4-2: " ++ show (A04.passphrases2 input)  -- 167
+
+advent05 :: IO ()
+advent05 = do 
+  input <- A05.parseInput <$> getInput 5
+  putStrLn $ "Advent 5-1: " ++ show (A05.steps1 input)  -- 343364
+  putStrLn $ "Advent 5-2: " ++ show (A05.steps2 input)  -- 25071947
+
+advent06 :: IO ()
+advent06 = do 
+  input <- A06.parseInput <$> getInput 6
+  let (state, cycles) = A06.dists input
+  putStrLn $ "Advent 6-1: " ++ show cycles  -- 11137
+  putStrLn $ "Advent 6-2: " ++ show (snd (A06.dists state) - 1) -- 1037
+
+parse ["01"] = advent01
+parse ["02"] = advent02
+parse ["03"] = advent03
+parse ["04"] = advent04
+parse ["05"] = advent05
+parse ["06"] = advent06
+
 main :: IO ()
 main = do 
-  content7 <- readFile "data/advent7.txt"
-  let ls7 = lines content7
-  let tower = buildTree ls7
+  args <- getArgs
 
-  putStrLn $ "Advent 7-1: " ++ show (root tower)
-  putStrLn $ "Advent 7-2: " ++ show (unbalanced tower 0)
+  parse args
+
+--  input <- A01.parseInput <$> getInput 1
+--  putStrLn $ "Advent 1-1: " ++ show (A01.captcha1 input)  -- 1223
+--  putStrLn $ "Advent 1-2: " ++ show (A01.captcha2 input)  -- 1284
+  
+--  content7 <- readFile "data/advent7.txt"
+--  let ls7 = lines content7
+--  let tower = buildTree ls7
+--
+--  putStrLn $ "Advent 7-1: " ++ show (root tower)
+--  putStrLn $ "Advent 7-2: " ++ show (unbalanced tower 0)
 
 --  content8 <- readFile "data/advent8.txt"
 --  let ls8 = lines content8
@@ -96,7 +159,7 @@ main = do
 --  putStrLn $ "Advent 23-1: " ++ show (A23.answer1 ls23) 
 --  putStrLn $ "Advent 23-2: " ++ show (A23.answer2 ls23) 
 
-  content24 <- readFile "data/advent24.txt"
-  let ls24 = lines content24
-  putStrLn $ "Advent 24-1: " ++ show (A24.answer1 ls24) 
-  putStrLn $ "Advent 24-2: " ++ show (A24.answer2 ls24) 
+--  content24 <- readFile "data/advent24.txt"
+--  let ls24 = lines content24
+--  putStrLn $ "Advent 24-1: " ++ show (A24.answer1 ls24) 
+--  putStrLn $ "Advent 24-2: " ++ show (A24.answer2 ls24) 
