@@ -1,5 +1,6 @@
 module Advent18 
-    ( answer1
+    ( parseInput
+    , answer1
     , answer2
     ) where
 
@@ -7,11 +8,14 @@ import Data.Char
 import Data.Tuple (swap)
 import qualified Data.Sequence as S (Seq, replicate, fromList, index, update)
 
-answer1 :: [String] -> Int
-answer1 = head . send . processOps . parse
+parseInput :: String -> [Op]
+parseInput = parse . lines
 
-answer2 :: [String] -> Int
-answer2 xs = let (p, p') = processPrograms $ parse xs
+answer1 :: [Op] -> Int
+answer1 = head . send . processOps
+
+answer2 :: [Op] -> Int
+answer2 xs = let (p, p') = processPrograms xs
              in sendn $ head $ filter (\p -> pId p == 1) [p, p']
 
 test1 :: [String]

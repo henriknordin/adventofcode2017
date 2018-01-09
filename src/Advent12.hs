@@ -1,6 +1,7 @@
 module Advent12 
-    ( answer1
-    , answer2
+    ( parseInput
+    , answer1
+    , countGroups
     ) where
 
 import Data.List.Split (splitOn)
@@ -16,15 +17,14 @@ test =
   , "5 <-> 6"
   , "6 <-> 4, 5"]
 
-run :: [String] -> [(Int, Int, [Int])]
-run = adjacencyList . map parse
+parseInput :: String -> Graph
+parseInput = buildGraph . adjacencyList. map parse . lines
 
 parse :: String -> [String]
 parse = splitOn "<->" . removeWhitespace
 
 removeWhitespace :: String -> String
 removeWhitespace = filter (/= ' ')
-
 
 buildGraph :: [(Int, Int, [Int])] -> Graph
 buildGraph xs = let (graph, _, _) = graphFromEdges xs
@@ -44,8 +44,6 @@ countVertices g v = length $ reachable g v
 countGroups :: Graph -> Int
 countGroups = length . components 
 
-answer1 :: [String] -> Int
-answer1 xs = countVertices (buildGraph $ run xs) 0
+answer1 :: Graph -> Int
+answer1 g = countVertices g 0
 
-answer2 :: [String] -> Int
-answer2 xs = countGroups . buildGraph $ run xs

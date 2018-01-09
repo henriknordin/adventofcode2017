@@ -1,8 +1,20 @@
-module Advent10 where
+module Advent10 
+    ( parseInput
+    , answer10_1
+    , answer10_2
+
+    -- needed by advent14
+    , hexadecimal
+    , sparseHash
+    , denseHash
+    , mkA
+    , convert
+    ) where
 
 import qualified Data.Foldable as F
 import qualified Data.Sequence as S
 import Data.List
+import Data.List.Split (splitOn)
 import Data.Bits (xor)
 import Numeric (showHex)
 import Data.Char (ord)
@@ -21,11 +33,17 @@ circularList = [0, 1, 2, 3, 4]
 inputLengths :: [Int]
 inputLengths = [3, 4, 1, 5]
 
-answer10_1 :: Int
-answer10_1 = product $ take 2 $ ring $ processAll (mkA 255) [97,167,54,178,2,11,209,174,119,248,254,0,255,1,64,190]
+parseInput :: String -> String
+parseInput = head . lines
 
-answer10_2 :: String
-answer10_2 = hexadecimal $ denseHash $ sparseHash (mkA 255) $ convert "97,167,54,178,2,11,209,174,119,248,254,0,255,1,64,190"
+parseInts :: String -> [Int]
+parseInts = map (\x -> read x :: Int) . splitOn ","
+
+answer10_1 :: String -> Int
+answer10_1 xs = product $ take 2 $ ring $ processAll (mkA 255) $ parseInts xs
+
+answer10_2 :: String -> String
+answer10_2 xs = hexadecimal $ denseHash $ sparseHash (mkA 255) $ convert xs
 
 processAll :: A -> [Int] -> A
 processAll = foldl process 

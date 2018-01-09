@@ -1,10 +1,11 @@
 module Advent09
-    ( input
+    ( parseInput
     , scoreStream
-    , score
-    , filterStream
     , countGarbage
     ) where
+
+parseInput :: String -> String
+parseInput = head . lines
 
 input :: [String]
 input =
@@ -48,3 +49,4 @@ countGarbage xs = let xs' = filterExclamation xs
     countGarbage' ('<' : xs) n = let garbage = takeWhile (/= '>') xs
                                  in countGarbage' (tail $ dropWhile (/= '>') xs) (n + length garbage)
     countGarbage' (_ : xs) n = countGarbage' xs n
+

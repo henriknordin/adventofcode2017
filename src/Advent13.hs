@@ -1,17 +1,28 @@
 module Advent13
-    ( answer1
+    ( parseInput
+    , answer1
     , answer2
     ) where
 
 import           Data.List.Split (splitOn)
 
-answer1 :: [String] -> Int
-answer1 xs = totalPenalty $ fillEmptyLayers 0 $ parse xs
+parseInput :: String -> [Layer]
+parseInput = parse . lines
 
-answer2 :: [String] -> Int
-answer2 xs = let init = fillEmptyLayers 0 $ parse xs
+parse :: [String] -> [Layer]
+parse = map (parseLayers . splitOn ":" . removeWhitespace)
+
+parseLayers :: [String] -> Layer
+parseLayers [l, r] = mkLayer (toInt l) (toInt r)
+
+answer1 :: [Layer] -> Int
+answer1 xs = totalPenalty $ fillEmptyLayers 0 xs
+
+answer2 :: [Layer] -> Int
+answer2 xs = let init = fillEmptyLayers 0 xs
                  initByDelay = zip (iterate cycleScanners init) [0, 1..]
              in  snd $ head $ dropWhile fst $ map (\(s, i) -> (isCaught s, i))  initByDelay
+
 test :: [String]
 test =
   [ "0: 3"
@@ -30,22 +41,12 @@ data Range = Scanner Int Int Int
 mkLayer :: Int -> Int -> Layer
 mkLayer l r = MkLayer l (Scanner (r - 1) 0 1)
 
-parse :: [String] -> [Layer]
-parse = map (parseLayers . split . removeWhitespace)
-
-parseLayers :: [String] -> Layer
-parseLayers [l, r] = mkLayer (toInt l) (toInt r)
-
 fillEmptyLayers :: Int -> [Layer] -> [Layer]
 fillEmptyLayers n [] = []
 fillEmptyLayers n (x:xs) = if (layer x == n) then x : (fillEmptyLayers (n + 1) xs) else ((MkLayer n Empty) : (fillEmptyLayers (n + 1)  (x : xs)))
 
 toInt :: String -> Int
 toInt x = read x :: Int
-
-
-split :: String -> [String]
-split = splitOn ":"
 
 removeWhitespace :: String -> String
 removeWhitespace = filter (/= ' ')
@@ -78,3 +79,4 @@ totalPenalty = totalPenalty' 0
 caught :: Layer -> Bool
 caught (MkLayer l (Scanner _ p _)) =  p == 0
 caught (MkLayer l Empty)           = False
+

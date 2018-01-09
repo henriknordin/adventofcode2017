@@ -1,13 +1,17 @@
 module Advent14 
-    ( answer1
+    ( parseInput
+    , answer1
     , answer2
     ) where
 
-import Advent10
+import qualified Advent10 as A10 (hexadecimal, sparseHash, denseHash, mkA, convert)
 import Data.Char (intToDigit)
 import Numeric (showIntAtBase, readHex)
 import Data.Matrix as M (Matrix, zero, setElem, getElem)
 import Data.Graph as G 
+
+parseInput :: String -> String
+parseInput = head . lines
 
 answer1 :: String -> Int
 answer1 xs = length . filter (== '1') $ concatMap (convertBinary . buildKnotHash) (hashInput xs)
@@ -22,7 +26,7 @@ hashInput :: String -> [String]
 hashInput xs = zipWith (\x suffix -> x ++ "-" ++ show suffix) (replicate 128 xs) [0, 1..]
 
 buildKnotHash :: String -> String
-buildKnotHash xs = hexadecimal $ denseHash $ sparseHash (mkA 255) $ convert xs
+buildKnotHash xs = A10.hexadecimal $ A10.denseHash $ A10.sparseHash (A10.mkA 255) $ A10.convert xs
 
 convertBinary :: String -> String
 convertBinary xs = let s = showIntAtBase 2 intToDigit (fst $ head $ readHex xs) ""

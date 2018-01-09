@@ -1,4 +1,8 @@
-module Advent16 where
+module Advent16 
+    ( parseInput
+    , answer1
+    , answer2
+    ) where
 
 import Data.List.Split (splitOn)
 import qualified Data.Foldable as F (toList)
@@ -9,6 +13,9 @@ import Data.Tuple (swap)
 
 programs :: String
 programs = "abcdefghijklmnop"
+
+parseInput :: String -> String
+parseInput = head . lines
 
 answer1 :: String -> String
 answer1 inp = let steps = splitOn "," inp

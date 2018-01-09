@@ -1,11 +1,18 @@
 --{-# LANGUAGE DuplicateRecordFields #-} 
-module Advent17 where
+module Advent17 
+    ( parseInput
+    , answer1
+    , answer2
+    ) where
 
 import qualified Data.Sequence as S (Seq, fromList, singleton, insertAt, index, dropWhileL)
 
 data Buffer = MkBuffer { buffer :: S.Seq Int
                        , index  :: !Int
                        } deriving Show
+
+parseInput :: String -> Int
+parseInput = (\x -> read x :: Int) . head . lines
 
 mkBuffer :: Buffer
 mkBuffer = MkBuffer (S.singleton 0) 0

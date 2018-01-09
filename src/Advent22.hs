@@ -1,5 +1,6 @@
 module Advent22 
-  ( answer1
+  ( parseInput
+  , answer1
   , answer2)
   where
 
@@ -24,15 +25,15 @@ nextCell :: Cell -> Cell
 nextCell Flagged = Clean
 nextCell n = succ n
 
-answer1 :: [String] -> Int -> Int
-answer1 xs = burst (parse xs) (Carrier (0, 0) U 0)
+answer1 :: Map Position Cell -> Int -> Int
+answer1 xs = burst xs (Carrier (0, 0) U 0)
   where 
     burst _ (Carrier _ _ i) 0 = i
     burst m c n = let (m', c') = move m c
                   in burst m' c' (n-1)
 
-answer2 :: [String] -> Int -> Int
-answer2 xs = burst (parse xs) (Carrier (0, 0) U 0)
+answer2 :: Map Position Cell -> Int -> Int
+answer2 xs = burst xs (Carrier (0, 0) U 0)
   where 
     burst _ (Carrier _ _ i) 0 = i
     burst m c n = let (m', c') = moveEvolved m c
@@ -75,6 +76,9 @@ next (x, y) R = (x+1, y)
 
 test :: [String]
 test = ["..#", "#..", "..."]
+
+parseInput :: String -> Map Position Cell
+parseInput = parse . lines
 
 parse :: [String] -> Map Position Cell
 parse xs = let offset = (length xs - 1) `div` 2
