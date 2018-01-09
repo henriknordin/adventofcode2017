@@ -1,5 +1,6 @@
-module Advent8 
-    ( input
+module Advent08 
+    ( parseInput
+    , input
     , parse
     , process
     , advent8
@@ -7,8 +8,6 @@ module Advent8
 
 import Data.List
 import qualified Data.Map as M
-
-import Debug.Trace
 
 data Instruction = 
   MkInstruction { register  :: String
@@ -23,10 +22,13 @@ data Condition =
               , cValue    :: Int
               } deriving Show
 
+parseInput :: String -> [Instruction]
+parseInput = map parse . lines
+
 parse :: String -> Instruction
 parse x = let sp = words x
               cond = MkCondition (sp !! 4) (sp !! 5) (read (sp !! 6) :: Int)
-          in MkInstruction (sp !! 0)
+          in MkInstruction (head sp)
                            (sp !! 1)
                            (read (sp !! 2) :: Int)
                            cond
@@ -38,8 +40,8 @@ input =
   , "c dec -10 if a >= 1"
   , "c inc -20 if c == 10"]
 
-process :: [String] -> (M.Map String Int, Int)
-process = foldl (\mp x -> single mp $ parse x) (M.empty, 0)
+process :: [Instruction] -> (M.Map String Int, Int)
+process = foldl single (M.empty, 0)
   where
     single :: (M.Map String Int, Int) -> Instruction -> (M.Map String Int, Int)
     single (mp, prev) i = let register' = register i
@@ -48,7 +50,7 @@ process = foldl (\mp x -> single mp $ parse x) (M.empty, 0)
                               cVal = M.findWithDefault 0 (cRegister con) mp
                               newVal = evalOp val (op i) (value i)
                               maxi = maximum [newVal, prev]
-                          in trace (show maxi) $ if predicate con mp then (M.insert register' newVal mp, maxi) else (mp, prev)
+                          in if predicate con mp then (M.insert register' newVal mp, maxi) else (mp, prev)
 
 predicate :: Condition -> M.Map String Int -> Bool
 predicate c mp = let actual = M.findWithDefault 0 (cRegister c) mp

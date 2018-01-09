@@ -1,4 +1,4 @@
-module Advent9
+module Advent09
     ( input
     , scoreStream
     , score

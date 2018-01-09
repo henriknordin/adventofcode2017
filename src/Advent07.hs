@@ -1,6 +1,5 @@
-module Advent7
-    ( input7
-    , buildTree 
+module Advent07
+    ( parseInput
     , root
     , unbalanced
     ) where
@@ -30,6 +29,9 @@ input7 =
 data Program = Program { name :: String 
                        , weight :: Int  
                        } deriving Show
+
+parseInput :: String -> T.Tree Program
+parseInput = buildTree . lines
 
 buildTree :: [String] -> T.Tree Program
 buildTree xs = let parsed = map parse xs

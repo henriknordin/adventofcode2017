@@ -35,7 +35,6 @@ parse = map (parseLayers . split . removeWhitespace)
 
 parseLayers :: [String] -> Layer
 parseLayers [l, r] = mkLayer (toInt l) (toInt r)
---parseLayers xs = trace (show xs) $ mkLayer 1 1
 
 fillEmptyLayers :: Int -> [Layer] -> [Layer]
 fillEmptyLayers n [] = []
