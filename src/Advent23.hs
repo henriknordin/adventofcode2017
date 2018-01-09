@@ -1,8 +1,8 @@
 module Advent23 
---    ( answer1
---    , answer2
---    ) 
-    where
+    ( parseInput
+    , answer1
+    , answer2
+    ) where
 
 import Data.Char
 import Data.Tuple (swap)
@@ -10,13 +10,16 @@ import qualified Data.Sequence as S (Seq, replicate, fromList, index, update)
 
 import Debug.Trace
 
-answer1 :: [String] -> Int
-answer1 = muln . processOps program . parse
+parseInput :: String -> [Op]
+parseInput = map parseOp . lines
+
+answer1 :: [Op] -> Int
+answer1 = muln . processOps program
   where
     program = Program (S.replicate 8 0) 0 0
 
-answer2 :: [String] -> S.Seq Int
-answer2 = register . processOps program . parse
+answer2 :: [Op] -> S.Seq Int
+answer2 = register . processOps program
   where
     register' = S.update 0 1 $ S.replicate 8 0
     program = trace (show register') Program register' 0 0
@@ -44,45 +47,20 @@ processOps program ops = go program (S.fromList ops)
                          op = S.index ops index'
                      in if index' < 0 || index' >= length ops
                           then program
-                          else if index' == 19 -- || index' == 23
-                            then go (optimize program index') ops
-                          --else trace (show index' ++ "  " ++ show op ++ "  " ++ show (register program)) $ go (processOp program op) ops 
-                            else trace (show (register program)) $ go (processOp program op) ops 
-                            --else go (processOp program op) ops 
+                          --else if S.index (register program) 1 == 1 && index' == 19 
+                            --then go (processOp (optimize program)) ops
+                            --else 
+                          else go (processOp program op) ops 
 
---19  Jnz (Letter 6) (Value (-8))  fromList [1,106700,123700,2,7490,1,-99210,0]
---11  Set 6 (Letter 3)  fromList [1,106700,123700,2,7490,1,-99210,0]
---12  Mul 6 (Letter 4)  fromList [1,106700,123700,2,7490,1,2,0]
---13  Sub 6 (Letter 1)  fromList [1,106700,123700,2,7490,1,14980,0]
---14  Jnz (Letter 6) (Value 2)  fromList [1,106700,123700,2,7490,1,-91720,0]
---16  Sub 4 (Value (-1))  fromList [1,106700,123700,2,7490,1,-91720,0]
---17  Set 6 (Letter 4)  fromList [1,106700,123700,2,7491,1,-91720,0]
---18  Sub 6 (Letter 1)  fromList [1,106700,123700,2,7491,1,7491,0]
---19  Jnz (Letter 6) (Value (-8))  fromList [1,106700,123700,2,7491,1,-99209,0]
-
--- register e increased by 1 each loop, register g decreased by 1 each loop
--- [1,106700,123700,2,7490,1,-99210,0]
--- [1,106700,123700,2,7491,1,-99209,0]
-
--- 
-
-
---23  Jnz (Letter 6) (Value (-13))  fromList [1,106700,123700,80504,106700,0,-26196,0]
---10  Set 4 (Value 2)  fromList              [1,106700,123700,80504,106700,0,-26196,0]
---11  Set 6 (Letter 3)  fromList             [1,106700,123700,80504,2,0,-26196,0]
---12  Mul 6 (Letter 4)  fromList             [1,106700,123700,80504,2,0,80504,0]
---13  Sub 6 (Letter 1)  fromList             [1,106700,123700,80504,2,0,161008,0]
---14  Jnz (Letter 6) (Value 2)  fromList     [1,106700,123700,80504,2,0,54308,0]
---16  Sub 4 (Value (-1))  fromList           [1,106700,123700,80504,2,0,54308,0]
---17  Set 6 (Letter 4)  fromList             [1,106700,123700,80504,3,0,54308,0]
---18  Sub 6 (Letter 1)  fromList             [1,106700,123700,80504,3,0,3,0]
---20  Sub 3 (Value (-1))  fromList           [1,106700,123700,80504,106700,0,0,0]
---21  Set 6 (Letter 3)  fromList             [1,106700,123700,80505,106700,0,0,0]
---22  Sub 6 (Letter 1)  fromList             [1,106700,123700,80505,106700,0,80505,0]
---23  Jnz (Letter 6) (Value (-13))  fromList [1,106700,123700,80505,106700,0,-26195,0]
-
---23  [1,106700,123700,80504,106700,0,-26196,0]
---23  [1,106700,123700,80505,106700,0,-26195,0]
+optimize :: Program -> Program
+optimize (Program r i m) = 
+  let b = S.index r 1
+      d = S.index r 3
+      e = S.index r 4
+  in if d * e > b 
+    then Program r 24 m
+    else Program r i m
+               
 
 -- Manually transpiled
 --
@@ -146,23 +124,23 @@ processOps program ops = go program (S.fromList ops)
 -- }
 
 
-optimize :: Program -> Int -> Program
-optimize p 19 = let r = register p
-                    valE = S.index r 4
-                    valG = S.index r 6
-                    r' = S.update 4 (valE - valG) $ S.update 6 0 r
-                    r'' = if S.index r 3 * (S.index r 4 - 1)  - S.index r 1 == 0 
-                            then S.update 5 0 r'
-                            else r'
-                in Program r'' (index p + 1) (muln p)
-optimize p 23 = let r = register p
-                    valD = S.index r 3
-                    valG = S.index r 6
-                    r' = S.update 3 (valD - valG) (S.update 6 0 r)
-                    r'' = if (S.index r 3 - 1) * (S.index r 4 - 1) - S.index r 1 == 0 
-                            then S.update 5 0 r'
-                            else r'
-                in Program r'' (index p + 1) (muln p)
+--optimize :: Program -> Int -> Program
+--optimize p 19 = let r = register p
+--                    valE = S.index r 4
+--                    valG = S.index r 6
+--                    r' = S.update 4 (valE - valG) $ S.update 6 0 r
+--                    r'' = if S.index r 3 * (S.index r 4 - 1)  - S.index r 1 == 0 
+--                            then S.update 5 0 r'
+--                            else r'
+--                in Program r'' (index p + 1) (muln p)
+--optimize p 23 = let r = register p
+--                    valD = S.index r 3
+--                    valG = S.index r 6
+--                    r' = S.update 3 (valD - valG) (S.update 6 0 r)
+--                    r'' = if (S.index r 3 - 1) * (S.index r 4 - 1) - S.index r 1 == 0 
+--                            then S.update 5 0 r'
+--                            else r'
+--                in Program r'' (index p + 1) (muln p)
 
 processOp :: Program -> Op -> Program
 processOp (Program r i n) (Set a (Letter b))  = Program (S.update a (S.index r b) r) (i + 1) n
@@ -175,9 +153,6 @@ processOp (Program r i n) (Jnz (Letter a) (Letter b))  = if S.index r a /= 0 the
 processOp (Program r i n) (Jnz (Letter a) (Value b))   = if S.index r a /= 0 then Program r (i + b) n else Program r (i + 1) n
 processOp (Program r i n) (Jnz (Value a) (Letter b))  = if a /= 0 then Program r (i + S.index r b) n else Program r (i + 1) n
 processOp (Program r i n) (Jnz (Value a) (Value b))   = if a /= 0 then Program r (i + b) n else Program r (i + 1) n
-
-parse :: [String] -> [Op]
-parse = map parseOp
 
 parseOp :: String -> Op
 parseOp = go . words

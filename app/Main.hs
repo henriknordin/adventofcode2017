@@ -25,8 +25,8 @@ import qualified Advent19 as A19 (answer1, answer2)
 import qualified Advent20 as A20 (answer1, answer2)
 import qualified Advent21 as A21 (answer1, answer2)
 import qualified Advent22 as A22 (parseInput, answer1, answer2)
-import qualified Advent23 as A23 
-import qualified Advent24 as A24 (answer1, answer2)
+import qualified Advent23 as A23 (parseInput, answer1, answer2)
+import qualified Advent24 as A24 (parseInput, answer1, answer2)
 import qualified Advent25 as A25 (answer1)
 
 import Lib (getInput)
@@ -119,6 +119,7 @@ advent14 = do
 
 advent15 :: IO ()
 advent15 = do 
+  -- TODO Megaparsec
   putStrLn $ "Advent 15-1: " ++ show (A15.answer1 883 879) -- 609
   putStrLn $ "Advent 15-2: " ++ show (A15.answer2 883 879) -- 253
 
@@ -169,20 +170,19 @@ advent22 = do
 
 advent23 :: IO ()
 advent23 = do 
-  content <- readFile "data/input23.txt"
-  let ls = lines content
-  putStrLn $ "Advent 23-1: " ++ show (A23.answer1 ls) 
-  putStrLn $ "Advent 23-2: " ++ show (A23.answer2 ls) 
+  input <- A23.parseInput <$> getInput 23
+  putStrLn $ "Advent 23-1: " ++ show (A23.answer1 input) 
+  --putStrLn $ "Advent 23-2: " ++ show (A23.answer2 ls) 
 
 advent24 :: IO ()
 advent24 = do 
-  content <- readFile "data/input24.txt"
-  let ls = lines content
-  putStrLn $ "Advent 24-1: " ++ show (A24.answer1 ls) 
-  putStrLn $ "Advent 24-2: " ++ show (A24.answer2 ls) 
+  input <- A24.parseInput <$> getInput 24
+  putStrLn $ "Advent 24-1: " ++ show (A24.answer1 input) -- 1906
+  putStrLn $ "Advent 24-2: " ++ show (A24.answer2 input) -- 1824
 
 advent25 :: IO ()
 advent25 = 
+  -- TODO Megaparsec
   putStrLn $ "Answer 1: " ++ show A25.answer1
 
 parse :: [String] -> IO ()
