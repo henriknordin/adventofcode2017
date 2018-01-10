@@ -21,9 +21,9 @@ import qualified Advent15 as A15 (answer1, answer2)
 import qualified Advent16 as A16 (parseInput, answer1, answer2)
 import qualified Advent17 as A17 (parseInput, answer1, answer2)
 import qualified Advent18 as A18 (parseInput, answer1, answer2)
-import qualified Advent19 as A19 (answer1, answer2)
-import qualified Advent20 as A20 (answer1, answer2)
-import qualified Advent21 as A21 (answer1, answer2)
+import qualified Advent19 as A19 (parseInput, answer1, answer2)
+import qualified Advent20 as A20 (parseInput, answer1, answer2)
+import qualified Advent21 as A21 (parseInput, answer1, answer2)
 import qualified Advent22 as A22 (parseInput, answer1, answer2)
 import qualified Advent23 as A23 (parseInput, answer1, answer2)
 import qualified Advent24 as A24 (parseInput, answer1, answer2)
@@ -143,36 +143,33 @@ advent18 = do
 
 advent19 :: IO ()
 advent19 = do 
-  content <- readFile "data/input19.txt"
-  let ls = lines content
-  putStrLn $ "Advent 19-1: " ++ show (A19.answer1 ls) 
-  putStrLn $ "Advent 19-2: " ++ show (A19.answer2 ls) 
+  input <- A19.parseInput <$> getInput 19
+  putStrLn $ "Advent 19-1: " ++ show (A19.answer1 input) -- EOCZQMURF
+  putStrLn $ "Advent 19-2: " ++ show (A19.answer2 input) -- 16312
 
 advent20 :: IO ()
 advent20 = do 
-  content <- readFile "data/input20.txt"
-  let ls = lines content
-  putStrLn $ "Advent 20-1: " ++ show (A20.answer1 ls) 
-  putStrLn $ "Advent 20-2: " ++ show (A20.answer2 ls) 
+  input <- A20.parseInput <$> getInput 20
+  putStrLn $ "Advent 20-1: " ++ show (A20.answer1 input) -- 150
+  putStrLn $ "Advent 20-2: " ++ show (A20.answer2 input) -- 657
 
 advent21 :: IO ()
 advent21 = do 
-  content <- readFile "data/input21.txt"
-  let ls = lines content
-  putStrLn $ "Advent 21-1: " ++ show (A21.answer1 ls) 
-  putStrLn $ "Advent 21-2: " ++ show (A21.answer2 ls) 
+  input <- A21.parseInput <$> getInput 21
+  putStrLn $ "Advent 21-1: " ++ show (A21.answer1 input) -- 203
+  putStrLn $ "Advent 21-2: " ++ show (A21.answer2 input) -- 3342470
 
 advent22 :: IO ()
 advent22 = do 
   input <- A22.parseInput <$> getInput 22
-  putStrLn $ "Advent 22-1: " ++ show (A22.answer1 input 10000) 
-  putStrLn $ "Advent 22-2: " ++ show (A22.answer2 input 10000000) 
+  putStrLn $ "Advent 22-1: " ++ show (A22.answer1 input 10000) -- 5196
+  putStrLn $ "Advent 22-2: " ++ show (A22.answer2 input 10000000) -- 2511633
 
 advent23 :: IO ()
 advent23 = do 
   input <- A23.parseInput <$> getInput 23
-  putStrLn $ "Advent 23-1: " ++ show (A23.answer1 input) 
-  --putStrLn $ "Advent 23-2: " ++ show (A23.answer2 ls) 
+  putStrLn $ "Advent 23-1: " ++ show (A23.answer1 input) -- 4225
+  putStrLn $ "Advent 23-2: " ++ show (A23.answer2 input) -- 905
 
 advent24 :: IO ()
 advent24 = do 

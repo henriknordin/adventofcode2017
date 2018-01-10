@@ -1,4 +1,8 @@
-module Advent21 where
+module Advent21 
+    ( parseInput
+    , answer1
+    , answer2
+    ) where
 
 import Data.List (sortBy, groupBy)
 import Data.Ord
@@ -15,6 +19,9 @@ instance Ord a => Ord (M.Matrix a) where
 type Rules = Ma.Map (M.Matrix Char) (M.Matrix Char)
 type Grid  = M.Matrix Char
 
+parseInput :: String -> Rules
+parseInput = parse . lines
+
 buildMatrix :: [String] -> M.Matrix Char
 buildMatrix xs =
   let dim = length xs
@@ -23,11 +30,11 @@ buildMatrix xs =
 t0 :: M.Matrix Char
 t0 = buildMatrix [".#.", "..#", "###"]
 
-answer1 :: [String] -> Int
-answer1 = countOn . enhance 5 . parse
+answer1 :: Rules -> Int
+answer1 = countOn . enhance 5
 
-answer2 :: [String] -> Int
-answer2 = countOn . enhance 18 . parse
+answer2 :: Rules -> Int
+answer2 = countOn . enhance 18
 
 countOn :: Grid -> Int
 countOn = length . filter (== '#') . toList

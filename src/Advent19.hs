@@ -1,5 +1,6 @@
 module Advent19
-  ( answer1
+  ( parseInput
+  , answer1
   , answer2
   ) where
 
@@ -28,6 +29,9 @@ data Der = Der
   { x' :: !Int
   , y' :: !Int
   } deriving (Show)
+
+parseInput :: String -> [String]
+parseInput = lines
 
 answer1 :: [String] -> String
 answer1 xs =

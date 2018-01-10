@@ -1,5 +1,6 @@
 module Advent20
-  ( answer1
+  ( parseInput
+  , answer1
   , answer2
   ) where
 
@@ -21,6 +22,9 @@ data Particle = Particle
   , acc :: !Coordinate
   } deriving (Show, Eq)
 
+parseInput :: String -> [Particle]
+parseInput = parse . lines
+
 test1 :: [String]
 test1 = ["p=< 3,0,0>, v=< 2,0,0>, a=<-1,0,0>", "p=< 4,0,0>, v=< 0,0,0>, a=<-2,0,0>"]
 
@@ -32,15 +36,15 @@ test2 =
   , "p=<-2,0,0>, v=< 1,0,0>, a=< 0,0,0>"
   ]
 
-answer1 :: [String] -> Int
+answer1 :: [Particle] -> Int
 answer1 xs =
-  let byAccel = sortBy accel $ parse xs
+  let byAccel = sortBy accel xs
       lowestAcc = manhattan $ acc $ head byAccel
       lowest = takeWhile (\(Particle _ _ _ a) -> manhattan a == lowestAcc) byAccel
   in pId $ head lowest
 
-answer2 :: [String] -> Int
-answer2 = length . go 0 . sortBy (flip accel) . parse
+answer2 :: [Particle] -> Int
+answer2 = length . go 0 . sortBy (flip accel)
   where
     go :: Int -> [Particle] -> [Particle]
     go 100 ps = ps
