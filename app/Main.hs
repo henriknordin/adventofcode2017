@@ -209,6 +209,31 @@ parse ["22"] = advent22
 parse ["23"] = advent23
 parse ["24"] = advent24
 parse ["25"] = advent25
+parse _      = advent01 
+            >> advent02
+            >> advent03
+            >> advent04
+            >> advent05
+            >> advent06
+            >> advent07
+            >> advent08
+            >> advent09
+            >> advent10
+            >> advent11
+            >> advent12
+            >> advent13
+            >> advent14
+            >> advent15
+            >> advent16
+            >> advent17
+            >> advent18
+            >> advent19
+            >> advent20
+            >> advent21
+            >> advent22
+            >> advent23
+            >> advent24
+            >> advent25
 
 main :: IO ()
 main = getArgs >>= parse
