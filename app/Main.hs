@@ -1,7 +1,8 @@
+{-# LANGUAGE NumDecimals #-}
 module Main where
 
 import System.IO (readFile)
-import System.Environment
+import System.Environment (getArgs)
 
 import qualified Advent01 as A01 (parseInput, captcha1, captcha2)
 import qualified Advent02 as A02 (parseInput, checksum1, checksum2)
@@ -17,7 +18,7 @@ import qualified Advent11 as A11 (parseInput, advent11_1, advent11_2)
 import qualified Advent12 as A12 (parseInput, answer1, countGroups)
 import qualified Advent13 as A13 (parseInput, answer1, answer2)
 import qualified Advent14 as A14 (parseInput, answer1, answer2)
-import qualified Advent15 as A15 (answer1, answer2)
+import qualified Advent15 as A15 (parseInput, answer1, answer2)
 import qualified Advent16 as A16 (parseInput, answer1, answer2)
 import qualified Advent17 as A17 (parseInput, answer1, answer2)
 import qualified Advent18 as A18 (parseInput, answer1, answer2)
@@ -119,9 +120,9 @@ advent14 = do
 
 advent15 :: IO ()
 advent15 = do 
-  -- TODO Megaparsec
-  putStrLn $ "Advent 15-1: " ++ show (A15.answer1 883 879) -- 609
-  putStrLn $ "Advent 15-2: " ++ show (A15.answer2 883 879) -- 253
+  input <- A15.parseInput <$> getInput 15
+  putStrLn $ "Advent 15-1: " ++ show (A15.answer1 input) -- 609
+  putStrLn $ "Advent 15-2: " ++ show (A15.answer2 input) -- 253
 
 advent16 :: IO ()
 advent16 = do 
@@ -162,8 +163,8 @@ advent21 = do
 advent22 :: IO ()
 advent22 = do 
   input <- A22.parseInput <$> getInput 22
-  putStrLn $ "Advent 22-1: " ++ show (A22.answer1 input 10000) -- 5196
-  putStrLn $ "Advent 22-2: " ++ show (A22.answer2 input 10000000) -- 2511633
+  putStrLn $ "Advent 22-1: " ++ show (A22.answer1 input 1e4) -- 5196
+  putStrLn $ "Advent 22-2: " ++ show (A22.answer2 input 1e7) -- 2511633
 
 advent23 :: IO ()
 advent23 = do 

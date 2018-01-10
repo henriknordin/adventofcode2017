@@ -1,31 +1,34 @@
+{-# LANGUAGE NumDecimals #-}
 module Advent15 
-    ( answer1
+    ( parseInput
+    , answer1
     , answer2
     ) where
 
 import Data.Bits
 
-answer1 :: Int -> Int -> Int
-answer1 a b = judge 40000000 (generatorA1 a) (generatorB1 b)
+parseInput :: String -> [Int]
+parseInput = map (read . last . words) . lines
 
-answer2 :: Int -> Int -> Int
-answer2 a b = judge  5000000 (generatorA2 a) (generatorB2 b)
+answer1 :: [Int] -> Int
+answer1 xs = judge 40e6 generatorA generatorB
+  where
+    generatorA :: [Int]
+    generatorA = generator 16807 1 $ head xs
+    generatorB :: [Int]
+    generatorB = generator 48271 1 $ last xs
+
+answer2 :: [Int] -> Int
+answer2 xs = judge  5e6 generatorA generatorB
+  where
+    generatorA :: [Int]
+    generatorA = generator 16807 4 $ head xs
+    generatorB :: [Int]
+    generatorB = generator 48271 8 $ last xs
 
 generator :: Int -> Int -> Int -> [Int]
 generator f m s = let n = ((f * s) `mod` 2147483647) 
                   in if n `mod` m == 0 then n : generator f m n else generator f m n
-
-generatorA1 :: Int -> [Int]
-generatorA1 = generator 16807 1
-
-generatorB1 :: Int -> [Int]
-generatorB1 = generator 48271 1
-
-generatorA2 :: Int -> [Int]
-generatorA2 = generator 16807 4
-
-generatorB2 :: Int -> [Int]
-generatorB2 = generator 48271 8
 
 pairs :: [Int] -> [Int] -> [(Int, Int)]
 pairs = zip
