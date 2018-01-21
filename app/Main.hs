@@ -4,6 +4,8 @@ module Main where
 import System.IO (readFile)
 import System.Environment (getArgs)
 
+import Lib (getInput, getParsed)
+
 import qualified Advent01 as A01 (parseInput, captcha1, captcha2)
 import qualified Advent02 as A02 (parseInput, checksum1, checksum2)
 import qualified Advent03 as A03 (parseInput, manhattan, largerValue)
@@ -28,9 +30,7 @@ import qualified Advent21 as A21 (parseInput, answer1, answer2)
 import qualified Advent22 as A22 (parseInput, answer1, answer2)
 import qualified Advent23 as A23 (parseInput, answer1, answer2)
 import qualified Advent24 as A24 (parseInput, answer1, answer2)
-import qualified Advent25 as A25 (answer1)
-
-import Lib (getInput)
+import qualified Advent25 as A25 (parseInput, answer)
 
 advent01 :: IO ()
 advent01 = do
@@ -179,9 +179,11 @@ advent24 = do
   putStrLn $ "Advent 24-2: " ++ show (A24.answer2 input) -- 1824
 
 advent25 :: IO ()
-advent25 = 
-  -- TODO Megaparsec
-  putStrLn $ "Answer 1: " ++ show A25.answer1
+advent25 = do 
+  input <- getInput 25
+  (start, iter, rules) <- getParsed A25.parseInput input
+  putStrLn $ "Answer: " ++ show (A25.answer start iter rules) -- 4225
+
 
 parse :: [String] -> IO ()
 parse ["01"] = advent01
